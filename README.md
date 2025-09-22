@@ -1,12 +1,12 @@
 
   # Design System and 5 Pages
 
-  This is a code bundle for Design System and 5 Pages. The original project is available at https://www.figma.com/design/91R6dVqCv5uxLfdOldOEm8/Design-System-and-5-Pages.
+  This is a code bundle for Design System and 5 Pages. For educational purposes only.
 
   ## Running the code
 
   Run `npm i` to install the dependencies.
 
-  Run `npm run dev` to start the development server.
+  Run `npm start` to start the development server.
   # DATH
 # DATH
