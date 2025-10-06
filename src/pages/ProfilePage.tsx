@@ -317,10 +317,10 @@ export function ProfilePage() {
                   <p className="text-xs text-muted-foreground mb-6">{mockUser.joinDate}</p>
 
                   {/* Action Buttons */}
-                  <div className="space-y-2 w-full">
+                  <div className="flex gap-2 w-full">
                     <Dialog>
                       <DialogTrigger asChild>
-                        <Button variant="outline" className="w-full">
+                        <Button variant="outline" className="flex-1">
                           <Edit3 className="w-4 h-4 mr-2" />
                           Chỉnh sửa hồ sơ
                         </Button>
@@ -362,7 +362,7 @@ export function ProfilePage() {
                       </DialogContent>
                     </Dialog>
 
-                    <Button variant="outline" className="w-full">
+                    <Button variant="outline" className="flex-1">
                       <Share2 className="w-4 h-4 mr-2" />
                       Chia sẻ hồ sơ
                     </Button>
