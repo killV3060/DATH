@@ -375,25 +375,25 @@ export function ProfilePage() {
           {/* Main Content */}
           <div className="lg:col-span-8">
             <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-              <TabsList className="grid w-full grid-cols-5">
-                <TabsTrigger value="posts" className="flex items-center gap-2">
-                  <Package className="w-4 h-4" />
+              <TabsList className="w-full justify-start overflow-x-auto">
+                <TabsTrigger value="posts">
+                  <Package className="w-4 h-4 mr-2" />
                   Bài viết
                 </TabsTrigger>
-                <TabsTrigger value="saved" className="flex items-center gap-2">
-                  <Bookmark className="w-4 h-4" />
+                <TabsTrigger value="saved">
+                  <Bookmark className="w-4 h-4 mr-2" />
                   Đã lưu
                 </TabsTrigger>
-                <TabsTrigger value="orders" className="flex items-center gap-2">
-                  <ShoppingBag className="w-4 h-4" />
+                <TabsTrigger value="orders">
+                  <ShoppingBag className="w-4 h-4 mr-2" />
                   Đơn hàng
                 </TabsTrigger>
-                <TabsTrigger value="about" className="flex items-center gap-2">
-                  <Users className="w-4 h-4" />
+                <TabsTrigger value="about">
+                  <Users className="w-4 h-4 mr-2" />
                   Giới thiệu
                 </TabsTrigger>
-                <TabsTrigger value="settings" className="flex items-center gap-2">
-                  <Settings className="w-4 h-4" />
+                <TabsTrigger value="settings">
+                  <Settings className="w-4 h-4 mr-2" />
                   Cài đặt
                 </TabsTrigger>
               </TabsList>
