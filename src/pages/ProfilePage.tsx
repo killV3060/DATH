@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Settings, Edit3, Heart, Bookmark, Users, Package, Star, MessageCircle, Share2, MoreHorizontal, Camera, Bell, Moon, LogOut, ShoppingBag } from 'lucide-react';
+import { useState } from 'react';
+import { Settings, Edit3, Bookmark, Users, Package, Star, Share2, MoreHorizontal, Camera, LogOut, ShoppingBag, Eye } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { Badge } from '../components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
@@ -13,6 +13,7 @@ import { Separator } from '../components/ui/separator';
 import { useRouter } from '../components/AppRouter';
 import { Header } from '../components/Header';
 import { PostCard } from '../components/PostCard';
+import { OrderDetailModal } from '../components/OrderDetailModal';
 import {
   Dialog,
   DialogContent,
@@ -94,10 +95,80 @@ const mockSavedPosts = [
   }
 ];
 
+// Mock orders data
+const mockOrders = [
+  {
+    id: '1',
+    orderCode: 'DH001234',
+    date: '15/03/2024',
+    seller: {
+      id: 'seller1',
+      name: 'TechStore VN',
+      avatar: ''
+    },
+    products: [
+      {
+        id: 'p1',
+        name: 'MacBook Pro M3 14"',
+        image: 'https://images.unsplash.com/photo-1598860237986-013eede8beae?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzbWFydHBob25lJTIwdGVjaG5vbG9neSUyMGdhZGdldHxlbnwxfHx8fDE3NTg0MDk3Njl8MA&ixlib=rb-4.1.0&q=80&w=1080',
+        variant: 'M3, 16GB RAM, 512GB SSD',
+        quantity: 1,
+        price: 52000000
+      }
+    ],
+    totalAmount: 52030000,
+    status: 'shipping' as const,
+    shippingInfo: {
+      address: '123 Đường ABC, Quận 1, TP.HCM',
+      recipient: 'Nguyễn Văn Demo',
+      phone: '+84 123 456 789'
+    },
+    paymentMethod: 'COD (Thanh toán khi nhận hàng)',
+    timeline: {
+      ordered: '15/03/2024 10:30',
+      processing: '15/03/2024 11:00',
+      shipping: '16/03/2024 08:00'
+    }
+  },
+  {
+    id: '2',
+    orderCode: 'DH001235',
+    date: '10/03/2024',
+    seller: {
+      id: 'seller2',
+      name: 'Fashion Store',
+      avatar: ''
+    },
+    products: [
+      {
+        id: 'p2',
+        name: 'Áo thun nam cao cấp',
+        image: 'https://images.unsplash.com/photo-1598860237986-013eede8beae?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzbWFydHBob25lJTIwdGVjaG5vbG9neSUyMGdhZGdldHxlbnwxfHx8fDE3NTg0MDk3Njl8MA&ixlib=rb-4.1.0&q=80&w=1080',
+        variant: 'Màu đen, Size L',
+        quantity: 2,
+        price: 299000
+      }
+    ],
+    totalAmount: 628000,
+    status: 'completed' as const,
+    shippingInfo: {
+      address: '123 Đường ABC, Quận 1, TP.HCM',
+      recipient: 'Nguyễn Văn Demo',
+      phone: '+84 123 456 789'
+    },
+    paymentMethod: 'Chuyển khoản ngân hàng',
+    timeline: {
+      ordered: '10/03/2024 14:30',
+      processing: '10/03/2024 15:00',
+      shipping: '11/03/2024 09:00',
+      completed: '12/03/2024 16:30'
+    }
+  }
+];
+
 export function ProfilePage() {
   const { navigate, setAuthenticated } = useRouter();
   const [activeTab, setActiveTab] = useState('posts');
-  const [isEditing, setIsEditing] = useState(false);
   const [editForm, setEditForm] = useState({
     name: mockUser.name,
     bio: mockUser.bio,
@@ -113,10 +184,53 @@ export function ProfilePage() {
   });
   const [darkMode, setDarkMode] = useState(false);
 
+  // Order detail modal state
+  const [selectedOrder, setSelectedOrder] = useState<typeof mockOrders[0] | null>(null);
+  const [isOrderModalOpen, setIsOrderModalOpen] = useState(false);
+
   const handleEditProfile = () => {
-    setIsEditing(false);
     // Save profile logic here
     console.log('Saving profile:', editForm);
+  };
+
+  const handleViewOrder = (order: typeof mockOrders[0]) => {
+    setSelectedOrder(order);
+    setIsOrderModalOpen(true);
+  };
+
+  const formatCurrency = (amount: number) => {
+    return new Intl.NumberFormat('vi-VN', {
+      style: 'currency',
+      currency: 'VND',
+    }).format(amount);
+  };
+
+  const getStatusBadgeVariant = (status: string) => {
+    switch (status) {
+      case 'completed':
+        return 'default';
+      case 'shipping':
+        return 'secondary';
+      case 'cancelled':
+        return 'destructive';
+      default:
+        return 'outline';
+    }
+  };
+
+  const getStatusLabel = (status: string) => {
+    switch (status) {
+      case 'processing':
+        return 'Đang xử lý';
+      case 'shipping':
+        return 'Đang giao';
+      case 'completed':
+        return 'Hoàn tất';
+      case 'cancelled':
+        return 'Đã hủy';
+      default:
+        return 'Tất cả';
+    }
   };
 
   const handleLogout = () => {
@@ -367,18 +481,102 @@ export function ProfilePage() {
               </TabsContent>
 
               <TabsContent value="orders" className="space-y-6">
-                <Card>
-                  <CardContent className="py-12 text-center">
-                    <ShoppingBag className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
-                    <h3 className="font-medium mb-2">Xem đầy đủ lịch sử đơn hàng</h3>
-                    <p className="text-sm text-muted-foreground mb-6">
-                      Truy cập trang lịch sử đơn hàng để xem chi tiết và quản lý đơn hàng của bạn
-                    </p>
-                    <Button onClick={() => navigate('orders')}>
-                      Đi đến Lịch sử đơn hàng
-                    </Button>
-                  </CardContent>
-                </Card>
+                <div className="flex items-center justify-between">
+                  <h3 className="text-lg font-semibold">Đơn hàng của tôi ({mockOrders.length})</h3>
+                  <Button variant="outline" size="sm" onClick={() => navigate('orders')}>
+                    Xem tất cả
+                  </Button>
+                </div>
+
+                {mockOrders.length === 0 ? (
+                  <Card>
+                    <CardContent className="py-12 text-center">
+                      <ShoppingBag className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
+                      <h3 className="font-medium mb-2">Chưa có đơn hàng nào</h3>
+                      <p className="text-sm text-muted-foreground mb-4">
+                        Bắt đầu mua sắm và đơn hàng của bạn sẽ xuất hiện ở đây
+                      </p>
+                      <Button onClick={() => navigate('home')}>
+                        Khám phá sản phẩm
+                      </Button>
+                    </CardContent>
+                  </Card>
+                ) : (
+                  <div className="space-y-4">
+                    {mockOrders.map((order) => (
+                      <Card key={order.id} className="hover:shadow-md transition-shadow">
+                        <CardContent className="p-4">
+                          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                            <div className="flex-1">
+                              <div className="flex items-center gap-2 mb-2">
+                                <span className="font-semibold">#{order.orderCode}</span>
+                                <Badge variant={getStatusBadgeVariant(order.status) as any}>
+                                  {getStatusLabel(order.status)}
+                                </Badge>
+                              </div>
+                              
+                              <div className="flex items-center gap-3 mb-3">
+                                <Avatar className="h-8 w-8">
+                                  <AvatarImage src={order.seller.avatar} />
+                                  <AvatarFallback>{order.seller.name[0]}</AvatarFallback>
+                                </Avatar>
+                                <div className="text-sm">
+                                  <p className="font-medium">{order.seller.name}</p>
+                                  <p className="text-muted-foreground">{order.date}</p>
+                                </div>
+                              </div>
+
+                              <div className="space-y-2">
+                                {order.products.map((product) => (
+                                  <div key={product.id} className="flex items-center gap-3">
+                                    <img
+                                      src={product.image}
+                                      alt={product.name}
+                                      className="w-12 h-12 object-cover rounded"
+                                    />
+                                    <div className="flex-1 min-w-0">
+                                      <p className="text-sm font-medium truncate">{product.name}</p>
+                                      <p className="text-xs text-muted-foreground">{product.variant}</p>
+                                    </div>
+                                    <div className="text-right">
+                                      <p className="text-sm font-medium">x{product.quantity}</p>
+                                    </div>
+                                  </div>
+                                ))}
+                              </div>
+
+                              <Separator className="my-3" />
+
+                              <div className="flex items-center justify-between">
+                                <span className="text-sm text-muted-foreground">Tổng tiền:</span>
+                                <span className="font-semibold text-primary">
+                                  {formatCurrency(order.totalAmount)}
+                                </span>
+                              </div>
+                            </div>
+
+                            <div className="flex sm:flex-col gap-2">
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                className="flex-1 sm:flex-none"
+                                onClick={() => handleViewOrder(order)}
+                              >
+                                <Eye className="w-4 h-4 mr-2" />
+                                Xem chi tiết
+                              </Button>
+                              {order.status === 'completed' && (
+                                <Button size="sm" className="flex-1 sm:flex-none">
+                                  Mua lại
+                                </Button>
+                              )}
+                            </div>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+                )}
               </TabsContent>
 
               <TabsContent value="about" className="space-y-6">
@@ -441,7 +639,7 @@ export function ProfilePage() {
                       <Switch
                         id="mentions"
                         checked={notifications.mentions}
-                        onCheckedChange={(checked) => 
+                        onCheckedChange={(checked: boolean) => 
                           setNotifications({...notifications, mentions: checked})
                         }
                       />
@@ -455,7 +653,7 @@ export function ProfilePage() {
                       <Switch
                         id="hashtags"
                         checked={notifications.hashtags}
-                        onCheckedChange={(checked) => 
+                        onCheckedChange={(checked: boolean) => 
                           setNotifications({...notifications, hashtags: checked})
                         }
                       />
@@ -469,7 +667,7 @@ export function ProfilePage() {
                       <Switch
                         id="followers"
                         checked={notifications.followers}
-                        onCheckedChange={(checked) => 
+                        onCheckedChange={(checked: boolean) => 
                           setNotifications({...notifications, followers: checked})
                         }
                       />
@@ -483,7 +681,7 @@ export function ProfilePage() {
                       <Switch
                         id="system"
                         checked={notifications.system}
-                        onCheckedChange={(checked) => 
+                        onCheckedChange={(checked: boolean) => 
                           setNotifications({...notifications, system: checked})
                         }
                       />
@@ -537,6 +735,15 @@ export function ProfilePage() {
           </div>
         </div>
       </div>
+
+      {/* Order Detail Modal */}
+      {selectedOrder && (
+        <OrderDetailModal
+          order={selectedOrder}
+          open={isOrderModalOpen}
+          onClose={() => setIsOrderModalOpen(false)}
+        />
+      )}
     </div>
   );
 }

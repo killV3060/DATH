@@ -18,7 +18,7 @@ interface HeaderProps {
 }
 
 export function Header({ onMobileMenuOpen }: HeaderProps) {
-  const { navigate, user, setAuthenticated, isGuest, setGuest, isAuthenticated } = useRouter();
+  const { navigate, user, setAuthenticated, isGuest, setGuest } = useRouter();
   const [isDark, setIsDark] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
 

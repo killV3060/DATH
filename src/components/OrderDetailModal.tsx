@@ -1,5 +1,4 @@
-import React from 'react';
-import { X, Package, Truck, CheckCircle, XCircle, MapPin, CreditCard, Phone } from 'lucide-react';
+import { Package, Truck, CheckCircle, XCircle, MapPin, CreditCard, Phone } from 'lucide-react';
 import { Button } from './ui/button';
 import { Badge } from './ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
