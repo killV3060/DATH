@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Search, Camera, Wallet, Bell, Menu, Sun, Moon, User, Settings } from 'lucide-react';
+import { Search, Camera, Wallet, Bell, Menu, Sun, Moon, User, Settings, ShoppingBag } from 'lucide-react';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
@@ -117,6 +117,23 @@ export function Header({ onMobileMenuOpen }: HeaderProps) {
             <span className="sr-only">Ví</span>
           </Button>
 
+          {/* Orders */}
+          <Button
+            variant="ghost"
+            size="sm"
+            className="relative hidden sm:flex"
+            onClick={() => {
+              if (isGuest) {
+                navigate('register');
+              } else {
+                navigate('orders');
+              }
+            }}
+          >
+            <ShoppingBag className="w-4 h-4" />
+            <span className="sr-only">Đơn hàng</span>
+          </Button>
+
           {/* Notifications */}
           <Button
             variant="ghost"
@@ -198,6 +215,9 @@ export function Header({ onMobileMenuOpen }: HeaderProps) {
                   <DropdownMenuItem onClick={handleProfileClick}>
                     Trang cá nhân
                   </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => navigate('orders')}>
+                    Lịch sử đơn hàng
+                  </DropdownMenuItem>
                   <DropdownMenuItem>
                     Cửa hàng của tôi
                   </DropdownMenuItem>
@@ -209,6 +229,15 @@ export function Header({ onMobileMenuOpen }: HeaderProps) {
               </DropdownMenuItem>
               <DropdownMenuItem className="sm:hidden">
                 Ví
+              </DropdownMenuItem>
+              <DropdownMenuItem className="sm:hidden" onClick={() => {
+                if (isGuest) {
+                  navigate('register');
+                } else {
+                  navigate('orders');
+                }
+              }}>
+                Đơn hàng
               </DropdownMenuItem>
               <DropdownMenuSeparator className="sm:hidden" />
               <DropdownMenuItem onClick={toggleTheme} className="sm:hidden">

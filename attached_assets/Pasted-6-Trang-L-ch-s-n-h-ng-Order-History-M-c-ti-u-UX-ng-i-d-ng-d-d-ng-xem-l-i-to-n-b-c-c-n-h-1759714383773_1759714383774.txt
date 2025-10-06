@@ -1,0 +1,69 @@
+6) Trang Lịch sử đơn hàng (Order History)
+
+Mục tiêu UX: người dùng dễ dàng xem lại toàn bộ các đơn hàng, trạng thái, và hành động tiếp theo (mua lại, đánh giá, khiếu nại).
+
+Vị trí truy cập:
+
+Có thể đặt trong Trang Cá nhân (tab mới “Lịch sử đơn hàng”) → dễ gom chung với Saved/Wishlist.
+
+Hoặc tạo icon riêng trong navbar (giỏ hàng/đơn hàng) → thuận tiện nếu bạn muốn tách biệt trải nghiệm mua sắm với mạng xã hội.
+
+Layout (desktop):
+
+Header: tiêu đề "Lịch sử đơn hàng", breadcrumb (Home > Profile > Orders).
+
+Filter bar: dropdown lọc theo trạng thái (Tất cả | Đang xử lý | Đang giao | Hoàn tất | Đã hủy).
+
+Danh sách đơn hàng (list view, card view):
+
+Order Card:
+
+Mã đơn (#ORD12345), ngày đặt.
+
+Seller (avatar + tên shop, link đến shop).
+
+Thumbnail 1-2 sản phẩm chính, ghi "+3 sản phẩm khác" nếu nhiều.
+
+Tổng tiền, trạng thái (badge màu: xanh lá = hoàn tất, cam = đang giao, xám = hủy).
+
+CTA: “Xem chi tiết”, “Mua lại”, “Liên hệ shop”.
+
+Empty state: hình minh họa + CTA “Khám phá sản phẩm để mua hàng đầu tiên”.
+
+Mobile: full-screen list, swipe action (vuốt để hủy đơn, xem chi tiết).
+
+7) Pop-up Chi tiết Đơn hàng (Order Detail Modal)
+
+Mục tiêu UX: không cần rời trang, có thể xem chi tiết và xác nhận mua hàng nhanh.
+
+Trigger:
+
+Từ nút “Đặt hàng” hoặc “Xem chi tiết đơn hàng” trong lịch sử đơn hàng.
+
+Layout:
+
+Header: Mã đơn + trạng thái. Close button (X).
+
+Body:
+
+Thông tin sản phẩm: danh sách sản phẩm trong đơn (ảnh, tên, biến thể, số lượng, giá).
+
+Shipping info: địa chỉ, người nhận, số điện thoại.
+
+Payment: phương thức thanh toán, tổng tiền (subtotal, shipping, discount, final).
+
+Timeline: hiển thị trạng thái đơn hàng (Đã đặt → Đang xử lý → Đang giao → Hoàn tất).
+
+Footer (actions):
+
+Nếu đơn hàng chưa hoàn tất: CTA “Hủy đơn”, “Liên hệ shop”.
+
+Nếu đơn hàng đã hoàn tất: CTA “Mua lại”, “Đánh giá sản phẩm”.
+
+Mobile: hiển thị dạng bottom sheet (trượt lên từ dưới).
+
+📌 Gợi ý bổ sung UX:
+
+Thêm Notification type mới: khi đơn hàng đổi trạng thái (giao thành công, bị hủy, hoàn tiền).
+
+Tích hợp với Profile tab: hiển thị số lượng đơn “chưa giao” như badge đỏ trên tab.

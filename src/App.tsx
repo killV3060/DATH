@@ -6,6 +6,7 @@ import { HomePage } from './pages/HomePage';
 import { ProductPage } from './pages/ProductPage';
 import { NotificationsPage } from './pages/NotificationsPage';
 import { ProfilePage } from './pages/ProfilePage';
+import { OrderHistoryPage } from './pages/OrderHistoryPage';
 import { Toaster } from './components/ui/sonner';
 
 function AppContent() {
@@ -37,6 +38,12 @@ function AppContent() {
         return <RegisterPage />;
       }
       return <ProfilePage />;
+    case 'orders':
+      // Guests can't access orders, redirect to register
+      if (isGuest) {
+        return <RegisterPage />;
+      }
+      return <OrderHistoryPage />;
     case 'register':
       return <RegisterPage />;
     default:

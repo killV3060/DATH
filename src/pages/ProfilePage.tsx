@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Settings, Edit3, Heart, Bookmark, Users, Package, Star, MessageCircle, Share2, MoreHorizontal, Camera, Bell, Moon, LogOut } from 'lucide-react';
+import { Settings, Edit3, Heart, Bookmark, Users, Package, Star, MessageCircle, Share2, MoreHorizontal, Camera, Bell, Moon, LogOut, ShoppingBag } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { Badge } from '../components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
@@ -261,7 +261,7 @@ export function ProfilePage() {
           {/* Main Content */}
           <div className="lg:col-span-8">
             <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-              <TabsList className="grid w-full grid-cols-4">
+              <TabsList className="grid w-full grid-cols-5">
                 <TabsTrigger value="posts" className="flex items-center gap-2">
                   <Package className="w-4 h-4" />
                   Bài viết
@@ -269,6 +269,10 @@ export function ProfilePage() {
                 <TabsTrigger value="saved" className="flex items-center gap-2">
                   <Bookmark className="w-4 h-4" />
                   Đã lưu
+                </TabsTrigger>
+                <TabsTrigger value="orders" className="flex items-center gap-2">
+                  <ShoppingBag className="w-4 h-4" />
+                  Đơn hàng
                 </TabsTrigger>
                 <TabsTrigger value="about" className="flex items-center gap-2">
                   <Users className="w-4 h-4" />
@@ -360,6 +364,21 @@ export function ProfilePage() {
                     ))}
                   </div>
                 )}
+              </TabsContent>
+
+              <TabsContent value="orders" className="space-y-6">
+                <Card>
+                  <CardContent className="py-12 text-center">
+                    <ShoppingBag className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
+                    <h3 className="font-medium mb-2">Xem đầy đủ lịch sử đơn hàng</h3>
+                    <p className="text-sm text-muted-foreground mb-6">
+                      Truy cập trang lịch sử đơn hàng để xem chi tiết và quản lý đơn hàng của bạn
+                    </p>
+                    <Button onClick={() => navigate('orders')}>
+                      Đi đến Lịch sử đơn hàng
+                    </Button>
+                  </CardContent>
+                </Card>
               </TabsContent>
 
               <TabsContent value="about" className="space-y-6">
