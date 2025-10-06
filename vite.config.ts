@@ -54,6 +54,7 @@
       outDir: 'build',
     },
     server: {
+      allowedHosts: ['*'],
       port: 3000,
       open: true,
     },
