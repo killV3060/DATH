@@ -57,6 +57,5 @@
       host: '0.0.0.0',
       port: 5000,
       strictPort: true,
-      allowedHosts: ['7f411233-ff17-4e63-9a5c-a5b6e0ecbeb0-00-iiegkc0nbh40.sisko.replit.dev', '1e7c53e5-92af-4194-9d55-4e7ba683c8dc-00-2qp0h503hvkdy.riker.replit.dev'],
     },
   });
