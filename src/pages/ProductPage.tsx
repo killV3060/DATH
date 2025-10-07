@@ -136,8 +136,8 @@ export function ProductPage() {
       setShowGuestRegisterModal(true);
       return;
     }
-    // Buy now logic
-    console.log(`Buy now ${quantity} items`);
+    // Navigate to checkout page
+    navigate('checkout', { quantity });
   };
 
   const handleSubmitComment = () => {

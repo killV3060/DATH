@@ -7,6 +7,7 @@ import { ProductPage } from './pages/ProductPage';
 import { NotificationsPage } from './pages/NotificationsPage';
 import { ProfilePage } from './pages/ProfilePage';
 import { OrderHistoryPage } from './pages/OrderHistoryPage';
+import { CheckoutPage } from './pages/CheckoutPage';
 import { Toaster } from './components/ui/sonner';
 
 function AppContent() {
@@ -26,6 +27,12 @@ function AppContent() {
       return <HomePage />;
     case 'product':
       return <ProductPage />;
+    case 'checkout':
+      // Guests can't checkout, redirect to register
+      if (isGuest) {
+        return <RegisterPage />;
+      }
+      return <CheckoutPage />;
     case 'notifications':
       // Guests can't access notifications, redirect to register
       if (isGuest) {
