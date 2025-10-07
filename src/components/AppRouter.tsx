@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 
 // Route types
-export type Route = 'login' | 'register' | 'home' | 'product' | 'notifications' | 'profile' | 'orders' | 'checkout';
+export type Route = 'login' | 'register' | 'home' | 'product' | 'notifications' | 'profile' | 'orders' | 'checkout' | 'forgot-password' | 'reset-password';
 
 interface RouterContextType {
   currentRoute: Route;

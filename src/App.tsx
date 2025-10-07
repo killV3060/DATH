@@ -8,15 +8,23 @@ import { NotificationsPage } from './pages/NotificationsPage';
 import { ProfilePage } from './pages/ProfilePage';
 import { OrderHistoryPage } from './pages/OrderHistoryPage';
 import { CheckoutPage } from './pages/CheckoutPage';
+import { ForgotPasswordPage } from './pages/ForgotPasswordPage';
+import { ResetPasswordPage } from './pages/ResetPasswordPage';
 import { Toaster } from './components/ui/sonner';
 
 function AppContent() {
   const { currentRoute, isAuthenticated, isGuest } = useRouter();
 
-  // If not authenticated and not guest, show login page
+  // If not authenticated and not guest, show login/register/forgot-password/reset-password pages
   if (!isAuthenticated && !isGuest) {
     if (currentRoute === 'register') {
       return <RegisterPage />;
+    }
+    if (currentRoute === 'forgot-password') {
+      return <ForgotPasswordPage />;
+    }
+    if (currentRoute === 'reset-password') {
+      return <ResetPasswordPage />;
     }
     return <LoginPage />;
   }
