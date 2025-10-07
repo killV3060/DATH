@@ -57,5 +57,6 @@
       host: '0.0.0.0',
       port: 5000,
       strictPort: true,
+      allowedHosts: ['cbdbe64b-a192-47d0-9947-cd2fab9b2be9-00-3ukmcfixhnbc9.janeway.replit.dev'],
     },
   });
