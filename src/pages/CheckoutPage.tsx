@@ -332,11 +332,10 @@ export function CheckoutPage() {
 
                   {/* Place Order Button */}
                   <Button
-                    className="w-full bg-red-600 hover:bg-red-700 text-white"
-                    size="lg"
+                    className="w-full bg-red-600 hover:bg-red-700 text-white font-semibold text-lg py-6"
                     onClick={handlePlaceOrder}
                   >
-                    Đặt hàng
+                    Mua hàng
                   </Button>
 
                   {/* Terms */}
